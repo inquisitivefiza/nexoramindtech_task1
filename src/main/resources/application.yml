@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: task-manager-api
+  datasource:
+    # Default: file-based H2 so data survives restarts with zero setup.
+    # Override with DB_URL / DB_USERNAME / DB_PASSWORD for PostgreSQL.
+    url: ${DB_URL:jdbc:h2:file:./data/taskdb}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    open-in-view: false
+  jackson:
+    # All JSON (requests + responses) uses snake_case: created_at, access_token, total_elements ...
+    property-naming-strategy: SNAKE_CASE
+
+app:
+  jwt:
+    # MUST be overridden in any real deployment (>= 32 characters).
+    secret: ${JWT_SECRET:dev-only-secret-change-me-before-deploying-0123456789}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}   # 24 hours
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
